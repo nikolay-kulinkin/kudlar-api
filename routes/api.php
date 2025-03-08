@@ -1,8 +1,9 @@
 <?php
 
-use App\Http\Controllers\Api\V1\CategoryController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Api\V1\PostController;
+use App\Http\Controllers\Api\V1\CategoryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,4 +22,5 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::prefix('V1')->group(function(){
     Route::apiResource('categories',CategoryController::class);
+    Route::apiResource('posts',PostController::class);
 });
