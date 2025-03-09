@@ -20,7 +20,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::prefix('V1')->group(function(){
+Route::prefix('V1')->middleware(['throttle:api','auth:sanctum'])->group(function(){
     Route::apiResource('categories',CategoryController::class);
     Route::apiResource('posts',PostController::class);
 });
