@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Api\V1\AuthController;
 use App\Http\Controllers\Api\V1\PostController;
 use App\Http\Controllers\Api\V1\CategoryController;
 
@@ -20,7 +21,13 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+Route::prefix('V1')->middleware('throttle:api')->group(function(){
+    Route::post('register',[AuthController::class,'register']);
+    Route::post('login',[AuthController::class,'login']);
+});
+
 Route::prefix('V1')->middleware(['throttle:api','auth:sanctum'])->group(function(){
     Route::apiResource('categories',CategoryController::class);
     Route::apiResource('posts',PostController::class);
+    Route::get('logout',[AuthController::class,'logout']);
 });
